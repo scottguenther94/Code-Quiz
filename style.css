@@ -31,7 +31,7 @@ p {
 }
 .quizcontainer #quiz1
 {
-text-shadow:1px 1px 2px orange;
+text-shadow:1px 1px 2px lightblue;
 font-family:"Georgia", Arial, sans-serif;
 }
 .nextButton {
@@ -42,7 +42,7 @@ font-family:"Georgia", Arial, sans-serif;
     text-align: center;
     background-color: lightgrey;
     /*clear: both;*/
-    color: red;
+    color:navy;
     font-family:'Gabriola', serif;
     position: relative;
     margin: auto;
@@ -61,7 +61,7 @@ font-family:"Georgia", Arial, sans-serif;
     text-align: center;
     background-color: lightgrey;
     /*clear: both;*/
-    color: red;
+    color:navy;
     font-family:'Gabriola', serif;
     position: relative;
     margin: auto;
@@ -84,7 +84,7 @@ font-family:"Georgia", Arial, sans-serif;
     text-align: center;
 }
 .quizMessage {
-    background-color: peachpuff;
+    background-color:rgb(65, 85, 65);
     border-radius: 6px;
     width: 20%;
     margin: auto;
@@ -93,7 +93,7 @@ font-family:"Georgia", Arial, sans-serif;
 	font-size:20px;
 	font-weight:bold;
     font-family:'Gabriola', serif;
-    color: red;
+    color: navy;
 	position:absolute;
 	top:80%;
 	left:40%;
