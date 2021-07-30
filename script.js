@@ -1,34 +1,34 @@
 var questions = [{
-    question: "1. How do you write 'Hello World' in an alert box?",
-    choices: ["msg('Hello World')", "msgBox('Hello World');", "alertBox('Hello World');", "alert('Hello World');"],
+    question: "1. How do you write 'Hello' in an alert box?",
+    choices: ["msg('Hello')", "msgBox('Hello');", "alertBox('Hello');", "alert('Hello');"],
     correctAnswer: 3
 }, {
-    question: "2. How to empty an array in JavaScript?",
-    choices: ["arrayList[]", "arrayList(0)", "arrayList.length=0", "arrayList.len(0)"],
+    question: "2. How do you log items to the console?",
+    choices: ["console.log[]", "logConsole()", "console.log()", "consoleLog()"],
     correctAnswer: 2
 }, {
-    question: "3. What function to add an element at the begining of an array and one at the end?",
-    choices: ["push,unshift", "unshift,push", "first,push", "unshift,last"],
+    question: "3. What method allows you to add an element at the begining of an array?",
+    choices: ["push", "unshift", "append", "last"],
     correctAnswer: 1
 }, {
-    question: "4. What will this output? var a = [1, 2, 3]; console.log(a[6]);",
+    question: "4. What will this output? var numbers = [1, 2, 3]; console.log(numbers[6]);",
     choices: ["undefined", "0", "prints nothing", "Syntax error"],
     correctAnswer: 0
 }, {
-    question: "5. What would following code return? console.log(typeof typeof 1);",
-    choices: ["string", "number", "Syntax error", "undefined"],
+    question: "5. What would the following code return? console.log(typeof 32);",
+    choices: ["number", "string", "true", "undefined"],
     correctAnswer: 0
 },{
 	question: "6. Which software company developed JavaScript?",
-    choices: ["Mozilla", "Netscape", "Sun Microsystems", "Oracle"],
+    choices: ["Mozilla", "Netscape", "Google", "Apple"],
     correctAnswer: 1
 },{
-	question: "7. What would be the result of 3+2+'7'?",
-    choices: ["327", "12", "14", "57"],
+	question: "7. What symbol can you use to divide in an operation?",
+    choices: ["%", "*", "/", "|"],
     correctAnswer: 3
 },{
-	question: "8. Look at the following selector: $('div'). What does it select?",
-    choices: ["The first div element", "The last div element", "All div elements", "Current div element"],
+	question: "8. Look at the following selector: $('p'). What does it select?",
+    choices: ["The first p element", "The last p element", "All p elements", "Current p element"],
     correctAnswer: 2
 },{
 	question: "9. How can a value be appended to an array?",
@@ -40,6 +40,30 @@ var questions = [{
     correctAnswer: 0
 }];
 console.log(questions);
+
+function init(){
+	imgObj = document.getElementById('myImage');
+	imgObj.style.position= 'relative';
+	imgObj.style.left = '0px';
+	}
+	
+	function startStop(){
+	displayCurrentQuestion();
+	change();
+	}
+
+	
+	function change(){
+	var elem = document.getElementById("startButton");
+	if (elem.value=="Stop") elem.value = "Start";
+	else elem.value = "Stop";
+	}
+	
+	function stop(){
+	clearTimeout(animate);
+	}
+	
+	window.onload =init;
 
 
 var currentQuestion = 0;
@@ -81,7 +105,7 @@ $(document).ready(function ()
 			viewResults();		
 		}
     });
-
+ 
 	
 	// On clicking next, display the next question
     $(this).find(".nextButton").on("click", function () 
@@ -121,7 +145,7 @@ $(document).ready(function ()
 					$('#iTimeShow').html('Quiz Time Completed!');
 					$('#timer').html("You scored: " + correctAnswers + " out of: " + questions.length);
 					c=185;
-					$(document).find(".preButton").text("View Answer");
+					$(document).find(".preButton").text("View Answers");
 					$(document).find(".nextButton").text("Play Again?");
 					quizOver = true;
 					return false;
