@@ -80,7 +80,7 @@ font-family:"Georgia", Arial, sans-serif;
     height: auto;
     margin: auto;
     border-radius: 6px;
-    background-color: #f3dc45;
+    background-color: #76aa71;
     text-align: center;
 }
 .quizMessage {
@@ -100,7 +100,7 @@ font-family:"Georgia", Arial, sans-serif;
 }
 .choiceList {
     font-family: 'Arial', serif;
-    color: #ed12cd;
+    color: #340a77;
 	font-size:15px;
 	font-weight:bold;
 }

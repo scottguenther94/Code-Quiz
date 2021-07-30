@@ -39,6 +39,7 @@ var questions = [{
     choices: ["'32'", "'122'", "'13'", "'14'"],
     correctAnswer: 0
 }];
+console.log(questions);
 
 
 var currentQuestion = 0;
