@@ -1,121 +1,85 @@
+
 h1 {
-    font-family:'Gabriola', serif;
+  color:#89D8D5;
+  text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+  letter-spacing: .15em;
+}
+/* Styling for Start, Timer, and Reset */
+form {
+  padding: 20px;
+  display: block;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+#timer {
+  width: 6%;
+  height: 10%;
+  font-size: 2em;
+  font-family:monospace;
+  background-color: #c78181;
+  border:2px solid #EDCF79;
+  border-radius: 10px;
+}
+.button1 {
+  background-color: rgb(56, 29, 29);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+/* Quiz div */
+#quizWrap {
+    max-width: 600px;
+    margin: 0 auto;
+    position: absolute;
+    top:200px;
+    left: 125px;
+  }
+  
+  /* Quiz Questions */
+  #quizQn {
+    padding: 20px;
+    background: #EDCF79;
+    color: #fff7f8;
+    font-size: 24px;
+    border-radius: 10px;
+  }
+  
+  /* Quiz Answers */
+  #quizAns {
+    background-color: #89D8D5;
+    border-radius: 10px;
+    text-align: right;
+    margin: 10px 0;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 10px;
+  }
+  #quizAns input[type=radio] { display: none; }
+  #quizAns label {
+    background: #89D8D5;
+    border: 1px solid #DCC2BA;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 20px;
+    cursor: pointer;
     text-align: center;
-}
-ul {
-    list-style: none;
-}
-li {
-    font-family:'Cambria', serif;
-    font-size: 1.5em;
-}
-input[type=radio] {
-    border: 0px;
-    width: 20px;
-    height: 2em;
-}
-p {
-    font-family:'Gabriola', serif;
-}
-/* Quiz Classes */
- .quizContainer {
-    background-color: white;
-    border-radius: 6px;
-    width: 75%;
-    margin: auto;
-    padding-top: 5px;
-    /*-moz-box-shadow: 10px 10px 5px #888;
-    -webkit-box-shadow: 10px 10px 5px #888;
-    box-shadow: 10px 10px 5px #888;*/
-    position: relative;
-}
-.quizcontainer #quiz1
-{
-text-shadow:1px 1px 2px lightblue;
-font-family:"Georgia", Arial, sans-serif;
-}
-.nextButton {
-    box-shadow: 3px 3px 5px #888;
-    border-radius: 6px;
-   /* width: 150px;*/
-    height: 40px;
-    text-align: center;
-    background-color: lightgrey;
-    /*clear: both;*/
-    color:navy;
-    font-family:'Gabriola', serif;
-    position: relative;
-    margin: auto;
-	font-size:25px;
-	font-weight:bold;
-    padding-top: 5px;
-	float:right;
-	right:0%;
-}
-
-.preButton {
-    box-shadow: 3px 3px 5px #888;
-    border-radius: 6px;
-    /*width: 150px;*/
-    height: 40px;
-    text-align: center;
-    background-color: lightgrey;
-    /*clear: both;*/
-    color:navy;
-    font-family:'Gabriola', serif;
-    position: relative;
-    margin: auto;
-	font-size:25px;
-	font-weight:bold;
-    padding-top: 5px;
-	float:left;
-	left:0%;
-}
-
-.question {
-    font-family:'Century', serif;
-    font-size: 1.5em;
-	font-weight:bold;
-    width: 100%;
-    height: auto;
-    margin: auto;
-    border-radius: 6px;
-    background-color: #76aa71;
-    text-align: center;
-}
-.quizMessage {
-    background-color:rgb(65, 85, 65);
-    border-radius: 6px;
-    width: 20%;
-    margin: auto;
-    text-align: center;
-    padding: 5px;
-	font-size:20px;
-	font-weight:bold;
-    font-family:'Gabriola', serif;
-    color: navy;
-	position:absolute;
-	top:80%;
-	left:40%;
-}
-.choiceList {
-    font-family: 'Arial', serif;
-    color: #340a77;
-	font-size:15px;
-	font-weight:bold;
-}
-.result {
-    width: 40%;
-    height: auto;
-    border-radius: 6px;
-    background-color: linen;
-    margin: auto;
-	color:green;
-    text-align: center;
-	font-size:25px;
-    font-family:'Verdana', serif;
-	font-weight:bold;
-	position:absolute;
-	top:80%;
-	left:30%;
-}
+  }
+  #quizAns label.correct {
+    background: #d8ffc4;
+    border: 1px solid #60a03f;
+  }
+  #quizAns label.wrong {
+    background: #ffe8e8;
+    border: 1px solid #c78181;
+  }
+  
+  /* Overall body styling */
+  html, body {
+    background: #86645A; 
+    font-family: arial, sans-serif;
+  }

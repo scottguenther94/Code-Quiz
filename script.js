@@ -1,333 +1,203 @@
-var questions = [{
-    question: "1. How do you write 'Hello' in an alert box?",
-    choices: ["msg('Hello')", "msgBox('Hello');", "alertBox('Hello');", "alert('Hello');"],
-    correctAnswer: 3
-}, {
-    question: "2. How do you log items to the console?",
-    choices: ["console.log[]", "logConsole()", "console.log()", "consoleLog()"],
-    correctAnswer: 2
-}, {
-    question: "3. What method allows you to add an element at the begining of an array?",
-    choices: ["push", "unshift", "append", "last"],
-    correctAnswer: 1
-}, {
-    question: "4. What will this output? var numbers = [1, 2, 3]; console.log(numbers[6]);",
-    choices: ["undefined", "0", "prints nothing", "Syntax error"],
-    correctAnswer: 0
-}, {
-    question: "5. What would the following code return? console.log(typeof 32);",
-    choices: ["number", "string", "true", "undefined"],
-    correctAnswer: 0
-},{
-	question: "6. Which software company developed JavaScript?",
-    choices: ["Mozilla", "Netscape", "Google", "Apple"],
-    correctAnswer: 1
-},{
-	question: "7. What symbol can you use to divide in an operation?",
-    choices: ["%", "*", "/", "|"],
-    correctAnswer: 3
-},{
-	question: "8. Look at the following selector: $('p'). What does it select?",
-    choices: ["The first p element", "The last p element", "All p elements", "Current p element"],
-    correctAnswer: 2
-},{
-	question: "9. How can a value be appended to an array?",
-    choices: ["arr(length).value;", "arr[arr.length]=value;", "arr[]=add(value);", "None of these"],
-    correctAnswer: 1
-},{
-	question: "10. What will the code below output to the console? console.log(1 +  +'2' + '2');",
-    choices: ["'32'", "'122'", "'13'", "'14'"],
-    correctAnswer: 0
-}];
-console.log(questions);
-
-function init(){
-	imgObj = document.getElementById('myImage');
-	imgObj.style.position= 'relative';
-	imgObj.style.left = '0px';
-	}
-	
-	function startStop(){
-	displayCurrentQuestion();
-	change();
-	}
-
-	
-	function change(){
-	var elem = document.getElementById("startButton");
-	if (elem.value=="Stop") elem.value = "Start";
-	else elem.value = "Stop";
-	}
-	
-	function stop(){
-	clearTimeout(animate);
-	}
-	
-	window.onload =init;
-
-
-var currentQuestion = 0;
-var viewingAns = 0;
-var correctAnswers = 0;
-var quizOver = false;
-var iSelectedAnswer = [];
-	var c=180;
-	var t;
-$(document).ready(function () 
-{
-    // Display the first question
-    displayCurrentQuestion();
-    $(this).find(".quizMessage").hide();
-    $(this).find(".preButton").attr('disabled', 'disabled');
-	
-	timedCount();
-	
-	$(this).find(".preButton").on("click", function () 
-	{		
-		
-        if (!quizOver) 
-		{
-			if(currentQuestion == 0) { return false; }
-	
-			if(currentQuestion == 1) {
-			  $(".preButton").attr('disabled', 'disabled');
-			}
-			
-				currentQuestion--; // Since we have already displayed the first question on DOM ready
-				if (currentQuestion < questions.length) 
-				{
-					displayCurrentQuestion();
-					
-				} 					
-		} else {
-			if(viewingAns == 3) { return false; }
-			currentQuestion = 0; viewingAns = 3;
-			viewResults();		
-		}
-    });
- 
-	
-	// On clicking next, display the next question
-    $(this).find(".nextButton").on("click", function () 
-	{
-        if (!quizOver) 
-		{
-			
-            var val = $("input[type='radio']:checked").val();
-
-            if (val == undefined) 
-			{
-                $(document).find(".quizMessage").text("Please select an answer");
-                $(document).find(".quizMessage").show();
-            } 
-			else 
-			{
-                // TODO: Remove any message -> not sure if this is efficient to call this each time....
-                $(document).find(".quizMessage").hide();
-				if (val == questions[currentQuestion].correctAnswer) 
-				{
-					correctAnswers++;
-				}
-				iSelectedAnswer[currentQuestion] = val;
-				
-				currentQuestion++; // Since we have already displayed the first question on DOM ready
-				if(currentQuestion >= 1) {
-					  $('.preButton').prop("disabled", false);
-				}
-				if (currentQuestion < questions.length) 
-				{
-					displayCurrentQuestion();
-					
-				} 
-				else 
-				{
-					displayScore();
-					$('#iTimeShow').html('Quiz Time Completed!');
-					$('#timer').html("You scored: " + correctAnswers + " out of: " + questions.length);
-					c=185;
-					$(document).find(".preButton").text("View Answers");
-					$(document).find(".nextButton").text("Play Again?");
-					quizOver = true;
-					return false;
-					
-				}
-			}
-					
-		}	
-		else 
-		{ // quiz is over and clicked the next button (which now displays 'Play Again?'
-			quizOver = false; $('#iTimeShow').html('Time Remaining:'); iSelectedAnswer = [];
-			$(document).find(".nextButton").text("Next Question");
-			$(document).find(".preButton").text("Previous Question");
-			 $(".preButton").attr('disabled', 'disabled');
-			resetQuiz();
-			viewingAns = 1;
-			displayCurrentQuestion();
-			hideScore();
-		}
-    });
-});
-
-
-
-function timedCount()
-	{
-		if(c == 185) 
-		{ 
-			return false; 
-		}
-		
-		var hours = parseInt( c / 3600 ) % 24;
-		var minutes = parseInt( c / 60 ) % 60;
-		var seconds = c % 60;
-		var result = (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds  < 10 ? "0" + seconds : seconds);            
-		$('#timer').html(result);
-		
-		if(c == 0 )
-		{
-					displayScore();
-					$('#iTimeShow').html('Quiz Time Completed!');
-					$('#timer').html("You scored: " + correctAnswers + " out of: " + questions.length);
-					c=185;
-					$(document).find(".preButton").text("View Answer");
-					$(document).find(".nextButton").text("Play Again?");
-					quizOver = true;
-					return false;
-					
-		}
-		
-		/*if(c == 0 )
-		{	
-			if (!quizOver) 
-			{
-				var val = $("input[type='radio']:checked").val();
-            	if (val == questions[currentQuestion].correctAnswer) 
-				{
-					correctAnswers++;
-				}
-				currentQuestion++; // Since we have already displayed the first question on DOM ready
-				
-				if (currentQuestion < questions.length) 
-				{
-					displayCurrentQuestion();
-					c=15;
-				} 
-				else 
-				{
-					displayScore();
-					$('#timer').html('');
-					c=16;
-					$(document).find(".nextButton").text("Play Again?");
-					quizOver = true;
-					return false;
-				}
-			}
-			else 
-			{ // quiz is over and clicked the next button (which now displays 'Play Again?'
-				quizOver = false;
-				$(document).find(".nextButton").text("Next Question");
-				resetQuiz();
-				displayCurrentQuestion();
-				hideScore();
-			}		
-		}	*/
-		c = c - 1;
-		t = setTimeout(function()
-		{
-			timedCount()
-		},1000);
-	}
-	
-	
-// This displays the current question AND the choices
-function displayCurrentQuestion() 
-{
-
-	if(c == 185) { c = 180; timedCount(); }
-    //console.log("In display current Question");
-    var question = questions[currentQuestion].question;
-    var questionClass = $(document).find(".quizContainer > .question");
-    var choiceList = $(document).find(".quizContainer > .choiceList");
-    var numChoices = questions[currentQuestion].choices.length;
-    // Set the questionClass text to the current question
-    $(questionClass).text(question);
-    // Remove all current <li> elements (if any)
-    $(choiceList).find("li").remove();
-    var choice;
-	
-	
-    for (i = 0; i < numChoices; i++) 
-	{
-        choice = questions[currentQuestion].choices[i];
-		
-		if(iSelectedAnswer[currentQuestion] == i) {
-			$('<li><input type="radio" class="radio-inline" checked="checked"  value=' + i + ' name="dynradio" />' +  ' ' + choice  + '</li>').appendTo(choiceList);
-		} else {
-			$('<li><input type="radio" class="radio-inline" value=' + i + ' name="dynradio" />' +  ' ' + choice  + '</li>').appendTo(choiceList);
-		}
+/* Variables set for timer */
+var c = 60;
+var x;
+var timer_start = 0;
+/* Timer function that includes "Time's up" function */
+function myTimer() {
+    var score = quiz.score;
+    var highscore = localStorage.getItem('highscore');
+    document.getElementById('timer').value = c;
+    c = c - 1;
+    x = setTimeout('myTimer()', 1000);
+    if (c < 1) {
+        console.log('Game over!');
+        quiz.hQn.innerHTML = `You have answered ${quiz.score} of ${quiz.data.length} correctly.`;
+        quiz.hAns.innerHTML = "";
+        clearTimeout(x);
+        timer_start = 0;
+        if (score > highscore) {
+            localStorage.setItem('highscore', score);
+            console.log("Time's up! New high score!");
+            quiz.hAns.innerHTML = "Time's up! New high score!";
+        } else {
+            localStorage.setItem("recentScore", score)
+            console.log(`The highscore is still ${highscore}`);
+            quiz.hAns.innerHTML = `Time's up! The highscore is ${highscore} of 5`;
+        };
     }
 }
-
-function resetQuiz()
-{
-    currentQuestion = 0;
-    correctAnswers = 0;
-    hideScore();
-}
-
-function displayScore()
-{
-    $(document).find(".quizContainer > .result").text("You scored: " + correctAnswers + " out of: " + questions.length);
-    $(document).find(".quizContainer > .result").show();
-}
-
-function hideScore() 
-{
-    $(document).find(".result").hide();
-}
-
-// This displays the current question AND the choices
-function viewResults() 
-{
-
-	if(currentQuestion == 10) { currentQuestion = 0;return false; }
-	if(viewingAns == 1) { return false; }
-
-	hideScore();
-    var question = questions[currentQuestion].question;
-    var questionClass = $(document).find(".quizContainer > .question");
-    var choiceList = $(document).find(".quizContainer > .choiceList");
-    var numChoices = questions[currentQuestion].choices.length;
-    // Set the questionClass text to the current question
-    $(questionClass).text(question);
-    // Remove all current <li> elements (if any)
-    $(choiceList).find("li").remove();
-    var choice;
-	
-	
-	for (i = 0; i < numChoices; i++) 
-	{
-        choice = questions[currentQuestion].choices[i];
-		
-		if(iSelectedAnswer[currentQuestion] == i) {
-			if(questions[currentQuestion].correctAnswer == i) {
-				$('<li style="border:2px solid green;margin-top:10px;"><input type="radio" class="radio-inline" checked="checked"  value=' + i + ' name="dynradio" />' +  ' ' + choice  + '</li>').appendTo(choiceList);
-			} else {
-				$('<li style="border:2px solid red;margin-top:10px;"><input type="radio" class="radio-inline" checked="checked"  value=' + i + ' name="dynradio" />' +  ' ' + choice  + '</li>').appendTo(choiceList);
-			}
-		} else {
-			if(questions[currentQuestion].correctAnswer == i) {
-				$('<li style="border:2px solid green;margin-top:10px;"><input type="radio" class="radio-inline" value=' + i + ' name="dynradio" />' +  ' ' + choice  + '</li>').appendTo(choiceList);
-			} else {
-				$('<li><input type="radio" class="radio-inline" value=' + i + ' name="dynradio" />' +  ' ' + choice  + '</li>').appendTo(choiceList);
-			}
-		}
+function runTimer() {
+    if (!timer_start) {
+        timer_start = 1;
+        myTimer();
     }
-	
-	currentQuestion++;
-	
-	setTimeout(function()
-		{
-			viewResults();
-		},3000);
+    console.time();
 }
+/* Function that reveals Quiz upon clicking "Start" */
+function revealQuiz() {
+    var x = document.getElementById('quizWrap');
+    if (x.style.display === 'none') {
+        x.style.display = 'block';
+    } else {
+        x.style.display = 'none';
+    }
+}
+// Quiz structure pulled from https://code-boxx.com/simple-javascript-quiz/
+
+var quiz = {
+    // q = QUESTION, o = OPTIONS, a = CORRECT ANSWER
+    data: [
+        {
+            q: "What is the syntax for logging something to the console?",
+            o: [
+                "console-log()",
+                "console.log()",
+                "log.console()",
+                "log-console()"
+            ],
+            a: 1
+        },
+        {
+            q: "Which of the following IS NOT a way to set a variable?",
+            o: [
+                "var",
+                "const",
+                "let",
+                "set"
+            ],
+            a: 3
+        },
+        {
+            q: "How would you begin a single-line comment in JavaScript?",
+            o: [
+                "!!",
+                "/*",
+                "//",
+                "---"
+            ],
+            a: 2
+        },
+        {
+            q: "Which method joins two or more strings?",
+            o: [
+                "concat()",
+                "slice()",
+                "trim()",
+                "substr()"
+            ],
+            a: 0
+        },
+        {
+            q: "Which of the following is NOT an arithmetic operator in JavaScript?",
+            o: [
+                "+",
+                "/",
+                "-",
+                "&"
+            ],
+            a: 3
+        }
+    ],
+
+    // (A2) HTML ELEMENTS
+    hWrap: null, // HTML quiz container
+    hQn: null, // HTML question wrapper
+    hAns: null, // HTML answers wrapper
+
+    // (A3) GAME FLAGS
+    now: 0, // current question
+    score: 0, // current score
+
+    // (B) INIT QUIZ HTML
+    init: function () {
+        // (B1) WRAPPER
+        quiz.hWrap = document.getElementById("quizWrap");
+
+        // (B2) QUESTIONS SECTION
+        quiz.hQn = document.createElement("div");
+        quiz.hQn.id = "quizQn";
+        quiz.hWrap.appendChild(quiz.hQn);
+
+        // (B3) ANSWERS SECTION
+        quiz.hAns = document.createElement("div");
+        quiz.hAns.id = "quizAns";
+        quiz.hWrap.appendChild(quiz.hAns);
+
+        // (B4) GO!
+        quiz.draw();
+    },
+
+    // (C) DRAW QUESTION
+    draw: function () {
+        // (C1) QUESTION
+        quiz.hQn.innerHTML = quiz.data[quiz.now].q;
+
+        // (C2) OPTIONS
+        quiz.hAns.innerHTML = "";
+        for (let i in quiz.data[quiz.now].o) {
+            let radio = document.createElement("input");
+            radio.type = "radio";
+            radio.name = "quiz";
+            radio.id = "quizo" + i;
+            quiz.hAns.appendChild(radio);
+            let label = document.createElement("label");
+            label.innerHTML = quiz.data[quiz.now].o[i];
+            label.setAttribute("for", "quizo" + i);
+            label.dataset.idx = i;
+            label.addEventListener("click", quiz.select);
+            quiz.hAns.appendChild(label);
+        }
+    },
+
+    // (D) OPTION SELECTED
+    select: function () {
+        // (D1) DETACH ALL ONCLICK
+        let all = quiz.hAns.getElementsByTagName("label");
+        for (let label of all) {
+            label.removeEventListener("click", quiz.select);
+        }
+
+        // (D2) CHECK IF CORRECT
+        let correct = this.dataset.idx == quiz.data[quiz.now].a;
+        if (correct) {
+            quiz.score++;
+            this.classList.add("correct");
+        } else {
+            this.classList.add("wrong");
+            console.log('wrong')
+            c = c - 10;
+        }
+
+        // (D3) NEXT QUESTION OR END GAME
+        quiz.now++;
+        setTimeout(function () {
+            var score = quiz.score;
+            var highscore = localStorage.getItem('highscore');
+            if (quiz.now < quiz.data.length) { quiz.draw(); }
+            else {
+                quiz.hQn.innerHTML = `You have answered ${quiz.score} of ${quiz.data.length} correctly.`;
+                quiz.hAns.innerHTML = "";
+                clearTimeout(x);
+                timer_start = 0;;
+                /* Sets or reveals high score */
+                if (score > highscore) {
+                    localStorage.setItem('highscore', score);
+                    console.log('New high score!');
+                    quiz.hAns.innerHTML = "New high score!";
+                } else {
+                    localStorage.setItem("recentScore", score)
+                    console.log(`The highscore is still ${highscore}`);
+                    quiz.hAns.innerHTML = `The highscore is ${highscore} of 5`;
+                }
+            }
+        }, 1000);
+    },
+
+    // (E) RESTART QUIZ
+    reset: function () {
+        quiz.now = 0;
+        quiz.score = 0;
+        quiz.draw();
+    }
+};
+window.addEventListener("load", quiz.init);
